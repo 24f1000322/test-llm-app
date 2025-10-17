@@ -3,60 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World App</title>
-    <!--
-        Inline CSS for the background color and text styling.
-        All styles are embedded directly in the <style> tag
-        within the HTML document, fulfilling the single-page requirement.
-    -->
+    <title>Hello Sun App</title>
     <style>
-        /*
-         * Basic reset for body margins and padding to ensure full-viewport coverage.
-         */
+        /* Basic reset and body styling for a clean slate */
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensures the body takes at least the full viewport height */
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif; /* A common, readable font */
-            display: flex; /* Use flexbox to center the content */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
-            background-color: blue; /* The required blue background color */
-            color: white; /* Set text color to white for contrast on blue background */
-            font-size: 3em; /* Make the "Hello World" text large and prominent */
-            text-align: center; /* Center the text if it wraps */
+            background-color: #f4f7f6; /* Light background for a fresh look */
+            color: #333; /* Darker text for readability */
+            box-sizing: border-box;
+            line-height: 1.6;
         }
 
-        /*
-         * Style for the container div holding the "Hello World" text.
-         * This ensures the text itself is styled consistently.
-         */
-        .hello-container {
-            padding: 20px;
-            /* Optional: Add a subtle text shadow for better readability on darker backgrounds */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        /* Container for the logo and text, centered on the page */
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally within the container */
+            justify-content: center; /* Center items vertically if container has specific height */
+            text-align: center; /* Center text within the container */
+            padding: 30px;
+            background-color: #ffffff; /* White background for the content card */
+            border-radius: 12px; /* Slightly rounded corners for a modern feel */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            max-width: 90%; /* Ensures container doesn't get too wide on small screens */
+            width: 400px; /* Fixed width for larger screens, acts as max-width */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+
+        /* Styling for the SVG sun logo */
+        .sun-logo {
+            width: 150px; /* Default width for the SVG */
+            height: 150px; /* Default height for the SVG */
+            margin-bottom: 25px; /* Space between logo and text */
+            transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+
+            /* Responsive SVG sizing */
+            max-width: 80%; /* Limits the SVG's width relative to its parent container */
+            height: auto; /* Maintains aspect ratio as width changes */
+            display: block; /* Ensures it behaves like a block element for sizing */
+        }
+
+        .sun-logo:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover for interactivity */
+        }
+
+        /* Styling for the Hello World greeting text */
+        .greeting {
+            font-size: 2.5em; /* Default large font size */
+            margin: 0; /* Remove default margin */
+            color: #333; /* Keep text color consistent */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Subtle text shadow */
+
+            /* Responsive font size using clamp() for flexibility */
+            /* Min font size: 1.5em, Preferred font size: 6vw (6% of viewport width), Max font size: 2.5em */
+            font-size: clamp(1.5em, 6vw, 2.5em);
+        }
+
+        /* Media query for very small screens if specific adjustments are needed */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px; /* Reduce padding on smaller screens */
+            }
+            .sun-logo {
+                width: 120px; /* Slightly smaller logo on very small screens */
+                height: 120px;
+                margin-bottom: 20px;
+            }
+            /* clamp() for .greeting handles font size automatically */
         }
     </style>
 </head>
 <body>
-    <!--
-        This is the main content of our single-page application.
-        It contains the required text "Hello World".
-    -->
-    <div class="hello-container">
-        Hello World
-    </div>
+    <div class="container">
+        <!-- SVG Sun Logo -->
+        <!-- ViewBox defines the internal coordinate system (100x100), width/height scale it -->
+        <svg class="sun-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Main Sun Body (a circle) -->
+            <circle cx="50" cy="50" r="25" fill="#FFD700"/> <!-- Golden color for the sun -->
+            
+            <!-- Rays of the Sun -->
+            <!-- Using a group element to apply common stroke styles to all rays -->
+            <g stroke="#FFD700" stroke-width="4" stroke-linecap="round">
+                <!-- Eight rays are created by rotating a single line element around the center (50,50) -->
+                <!-- Each line starts at (50,20) and ends at (50,5) in the SVG's coordinate system -->
+                <line x1="50" y1="20" x2="50" y2="5" /> <!-- 0 degrees (top ray) -->
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(45 50 50)" />
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(90 50 50)" />
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(135 50 50)" />
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(180 50 50)" />
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(225 50 50)" />
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(270 50 50)" />
+                <line x1="50" y1="20" x2="50" y2="5" transform="rotate(315 50 50)" />
+            </g>
+        </svg>
 
-    <!--
-        No JavaScript is required for this simple task, as there is
-        no dynamic behavior or interactivity needed. The script tag
-        is included here for completeness, showing where JavaScript
-        would be placed if it were necessary, but it remains empty.
-    -->
-    <script>
-        // No JavaScript is needed for this application.
-        // This section would contain any client-side logic if required.
-        console.log("Hello World application loaded successfully.");
-    </script>
+        <!-- The main greeting text -->
+        <h1 class="greeting">Hello World</h1>
+    </div>
 </body>
 </html>
